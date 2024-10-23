@@ -141,6 +141,7 @@ def sobel_y(n,m):
     return kernel
 
 def gaussian_filter(n,m,sigma):
+    #定義gaussian filter, sigma為1
     kernel = np.zeros((n, m), dtype=np.float32)
     for i in range(n):
         for j in range(m):
