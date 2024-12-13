@@ -23,6 +23,7 @@ def apply_padding(image, padding):
     return padded_image
 
 def avg_conv(image, n, m, kernel, bias, padding):
+    image = apply_padding(image, padding)
     # get input size
     height, width, channels = image.shape
     # define output
@@ -36,10 +37,10 @@ def avg_conv(image, n, m, kernel, bias, padding):
                     for ke_x in range(n):
                         sum += image[i + ke_y, j + ke_x, k] * kernel[ke_y, ke_x, k]
                 new_image[i, j, k] = sum + bias
-    new_image = apply_padding(new_image, padding)
     return new_image
 
 def sobel_conv(image, n, m, kernel_y, kernel_x ,bias, padding):
+    image = apply_padding(image, padding)
     # get input size
     height, width, channels = image.shape
     # turn to grayscale
@@ -71,10 +72,10 @@ def sobel_conv(image, n, m, kernel_y, kernel_x ,bias, padding):
                     for ke_x in range(n):
                         sum += image[i + ke_y, j + ke_x, 0] * kernel_y[ke_y, ke_x]
                 new_image[i, j, 0] = abs(sum) + bias
-    new_image = apply_padding(new_image, padding)
     return new_image
 
 def gaussian_conv(image, n, m, kernel, bias, padding):
+    image = apply_padding(image, padding)
     # get input size
     height, width, channels = image.shape
     # define output
@@ -88,7 +89,6 @@ def gaussian_conv(image, n, m, kernel, bias, padding):
                     for ke_x in range(n):
                         sum += image[i + ke_y, j + ke_x, k] * kernel[ke_y, ke_x]
                 new_image[i, j, k] = sum + bias
-    new_image = apply_padding(new_image, padding)
     return new_image
     
 def pool(input, size, stride, type):
@@ -189,7 +189,7 @@ def add_signature_black(a, b):
 if __name__ == "__main__":
     n = 3
     m = 3
-    name = 'my_pic'
+    name = 'patrick'
     image = cv2.imread(f'{name}.jpg')
     if(len(image.shape) == 2):
         image.shape = image.shape + (1,)
